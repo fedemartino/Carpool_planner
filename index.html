@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carpool Planner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Login screen (visible when not authenticated) ── -->
+  <div id="login-screen" style="display:none;">
+    <div class="login-card">
+      <div class="login-logo">🚗</div>
+      <h1>Carpool Planner</h1>
+      <p>Sign in to manage your school carpool schedule</p>
+      <button onclick="login()" class="btn btn-login">Log in</button>
+    </div>
+  </div>
+
+  <!-- ── App (visible when authenticated) ── -->
+  <div id="app-content" style="display:none;">
+
+  <header>
+    <div class="header-left">
+      <h1>🚗 Carpool Planner</h1>
+      <p class="subtitle">Easily plan and manage your school carpool schedule</p>
+    </div>
+    <div class="header-right">
+      <div id="user-info" style="display:none;">
+        <img id="user-avatar" src="" alt="User avatar" style="display:none;" />
+        <span id="user-name"></span>
+      </div>
+      <button id="logout-btn" onclick="logout()" class="btn btn-logout" style="display:none;">Log out</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Tab Navigation -->
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="parents">Parents</button>
+      <button class="tab-btn" data-tab="children">Children</button>
+      <button class="tab-btn" data-tab="schedule">Schedule</button>
+    </nav>
+
+    <!-- Parents Tab -->
+    <section id="tab-parents" class="tab-content active">
+      <div class="card">
+        <h2>Add Parent / Driver</h2>
+        <form id="parent-form">
+          <div class="form-group">
+            <label for="parent-name">Name</label>
+            <input type="text" id="parent-name" placeholder="e.g. Maria Rossi" required />
+          </div>
+          <div class="form-group">
+            <label for="parent-phone">Phone</label>
+            <input type="tel" id="parent-phone" placeholder="e.g. +39 333 1234567" />
+          </div>
+          <div class="form-group">
+            <label for="parent-capacity">Car seats available</label>
+            <input type="number" id="parent-capacity" min="1" max="8" value="3" required />
+          </div>
+          <div class="form-group">
+            <label>Available days</label>
+            <div class="days-grid">
+              <label class="day-checkbox"><input type="checkbox" value="Mon" /> Mon</label>
+              <label class="day-checkbox"><input type="checkbox" value="Tue" /> Tue</label>
+              <label class="day-checkbox"><input type="checkbox" value="Wed" /> Wed</label>
+              <label class="day-checkbox"><input type="checkbox" value="Thu" /> Thu</label>
+              <label class="day-checkbox"><input type="checkbox" value="Fri" /> Fri</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Parent</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Parents List</h2>
+        <div id="parents-list" class="list-container">
+          <p class="empty-msg">No parents added yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Children Tab -->
+    <section id="tab-children" class="tab-content">
+      <div class="card">
+        <h2>Add Child</h2>
+        <form id="child-form">
+          <div class="form-group">
+            <label for="child-name">Child's name</label>
+            <input type="text" id="child-name" placeholder="e.g. Luca Rossi" required />
+          </div>
+          <div class="form-group">
+            <label for="child-school">School / Destination</label>
+            <input type="text" id="child-school" placeholder="e.g. Scuola Elementare ABC" required />
+          </div>
+          <div class="form-group">
+            <label for="child-parent">Parent</label>
+            <select id="child-parent" required>
+              <option value="">-- Select a parent --</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Child</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Children List</h2>
+        <div id="children-list" class="list-container">
+          <p class="empty-msg">No children added yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schedule Tab -->
+    <section id="tab-schedule" class="tab-content">
+      <div class="card">
+        <h2>Generate Weekly Schedule</h2>
+        <p class="info-text">The schedule assigns a driver for each school day based on availability and aims to distribute driving duties fairly.</p>
+        <div class="form-group">
+          <label for="schedule-weeks">Number of weeks</label>
+          <input type="number" id="schedule-weeks" min="1" max="12" value="4" />
+        </div>
+        <button id="generate-btn" class="btn btn-primary">Generate Schedule</button>
+      </div>
+
+      <div id="schedule-output" class="schedule-output" style="display:none;">
+        <div class="card">
+          <h2>Schedule</h2>
+          <div class="schedule-legend">
+            <span class="legend-item"><span class="dot dot-driving"></span> Driving</span>
+          </div>
+          <div id="schedule-table-container"></div>
+          <div class="schedule-summary">
+            <h3>Driving Summary</h3>
+            <div id="summary-container"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Carpool Planner &mdash; making school runs easier for everyone</p>
+  </footer>
+
+  </div><!-- /#app-content -->
+
+  <!-- Scripts: config must come first, then Auth0 SDK, then app logic -->
+  <script src="config.js"></script>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
