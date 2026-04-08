@@ -7,9 +7,32 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- ── Login screen (visible when not authenticated) ── -->
+  <div id="login-screen" style="display:none;">
+    <div class="login-card">
+      <div class="login-logo">🚗</div>
+      <h1>Carpool Planner</h1>
+      <p>Sign in to manage your school carpool schedule</p>
+      <button onclick="login()" class="btn btn-login">Log in</button>
+    </div>
+  </div>
+
+  <!-- ── App (visible when authenticated) ── -->
+  <div id="app-content" style="display:none;">
+
   <header>
-    <h1>🚗 Carpool Planner</h1>
-    <p class="subtitle">Easily plan and manage your school carpool schedule</p>
+    <div class="header-left">
+      <h1>🚗 Carpool Planner</h1>
+      <p class="subtitle">Easily plan and manage your school carpool schedule</p>
+    </div>
+    <div class="header-right">
+      <div id="user-info" style="display:none;">
+        <img id="user-avatar" src="" alt="User avatar" style="display:none;" />
+        <span id="user-name"></span>
+      </div>
+      <button id="logout-btn" onclick="logout()" class="btn btn-logout" style="display:none;">Log out</button>
+    </div>
   </header>
 
   <main>
@@ -122,6 +145,12 @@
     <p>Carpool Planner &mdash; making school runs easier for everyone</p>
   </footer>
 
+  </div><!-- /#app-content -->
+
+  <!-- Scripts: config must come first, then Auth0 SDK, then app logic -->
+  <script src="config.js"></script>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+  <script src="auth.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
